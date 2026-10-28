@@ -37,31 +37,41 @@
         </div>
       </a>
 
-      <!-- Navigation Links -->
-      <nav aria-label="Main Navigation">
-        <ul class="nav-links">
+      <!-- Navigation Links (Desktop bar & Mobile Drawer) -->
+      <nav class="nav-drawer" aria-label="Main Navigation">
+        <ul class="nav-links" id="mainNavLinks">
           <li><a href="#about" class="nav-link">About</a></li>
           <li><a href="#summary" class="nav-link">Summary</a></li>
           <li><a href="#skills" class="nav-link">Technical Skills</a></li>
           <li><a href="#experience" class="nav-link">Work Experience</a></li>
           <li><a href="#projects" class="nav-link">Project Highlights</a></li>
           <li><a href="#contact" class="nav-link">Contact</a></li>
+          <!-- Mobile-only Drawer Action Buttons -->
+          <li class="mobile-drawer-cta">
+            <a href="Ezeougu_Joshua_CV.pdf" download="Ezeougu_Joshua_CV.pdf" class="btn btn-outline" style="width: 100%;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+              <span>Download CV (PDF)</span>
+            </a>
+            <a href="#contact" class="btn btn-primary" style="width: 100%;">
+              <span>Get in Touch</span>
+            </a>
+          </li>
         </ul>
       </nav>
 
-      <!-- Header CTAs -->
+      <!-- Header CTAs (Desktop / Tablet) & Hamburger Toggle -->
       <div class="nav-actions">
-        <a href="Ezeougu_Joshua_CV.pdf" download="Ezeougu_Joshua_CV.pdf" class="btn btn-outline" style="padding: 8px 16px; font-size: 0.85rem;" title="Download CV (PDF)">
+        <a href="Ezeougu_Joshua_CV.pdf" download="Ezeougu_Joshua_CV.pdf" class="btn btn-outline nav-btn-cv" title="Download CV (PDF)">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
           <span>Download CV</span>
         </a>
-        <a href="#contact" class="btn btn-primary" style="padding: 8px 18px; font-size: 0.85rem;">
+        <a href="#contact" class="btn btn-primary nav-btn-contact">
           Get in Touch
         </a>
-        <button class="mobile-menu-toggle" aria-label="Toggle Navigation Menu">
-          <span></span>
-          <span></span>
-          <span></span>
+        <button class="mobile-menu-toggle" id="mobileMenuBtn" aria-label="Toggle Navigation Menu" aria-expanded="false" aria-controls="mainNavLinks">
+          <span class="bar bar-1"></span>
+          <span class="bar bar-2"></span>
+          <span class="bar bar-3"></span>
         </button>
       </div>
     </div>

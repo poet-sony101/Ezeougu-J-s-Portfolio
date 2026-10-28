@@ -4,9 +4,10 @@ A modern, fast, and responsive portfolio website designed for **Ezeougu Joshua U
 
 ---
 
-## 🎨 Theme: Warm Brown & Slate Gray
+## 🎨 Theme & Responsiveness
 
-The portfolio features a warm brown and slate gray aesthetic (warm charcoal espresso `#141211`, rich slate mocha `#1c1917`, stone-brown cards, warm golden bronze accents `#d4a373`, and refined taupe gray `#bdaea4`).
+- **Warm Brown & Slate Gray Palette**: Features a warm brown and slate gray aesthetic (warm charcoal espresso `#141211`, rich slate mocha `#1c1917`, stone-brown cards, warm golden bronze accents `#d4a373`, and refined taupe gray `#bdaea4`).
+- **Full Mobile Responsiveness**: End-to-end fluid layout tested across desktop, tablet, and mobile (down to 320px). Includes an animated slide-out mobile drawer menu, touch-friendly tap targets, adaptive typography with CSS `clamp()`, and zero horizontal overflow.
 
 ---
 

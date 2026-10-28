@@ -72,6 +72,8 @@
 html {
   scroll-behavior: smooth;
   color-scheme: dark;
+  overflow-x: hidden;
+  width: 100%;
 }
 
 body {
@@ -81,6 +83,8 @@ body {
   font-size: 16px;
   line-height: 1.6;
   overflow-x: hidden;
+  width: 100%;
+  position: relative;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -259,22 +263,52 @@ button {
   gap: 12px;
 }
 
+.mobile-drawer-cta {
+  display: none;
+}
+
 .mobile-menu-toggle {
   display: none;
   flex-direction: column;
-  gap: 5px;
-  width: 30px;
-  height: 24px;
   justify-content: center;
+  align-items: center;
+  width: 42px;
+  height: 42px;
+  padding: 8px;
+  background: rgba(195, 175, 160, 0.08);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  z-index: 1001;
+  gap: 5px;
+  transition: var(--transition);
+}
+
+.mobile-menu-toggle:hover {
+  background: rgba(195, 175, 160, 0.16);
+  border-color: rgba(212, 163, 115, 0.35);
 }
 
 .mobile-menu-toggle span {
   display: block;
-  width: 100%;
+  width: 22px;
   height: 2px;
   background: var(--text-primary);
   border-radius: 2px;
-  transition: var(--transition);
+  transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.mobile-menu-toggle.active span.bar-1 {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.mobile-menu-toggle.active span.bar-2 {
+  opacity: 0;
+  transform: scaleX(0);
+}
+
+.mobile-menu-toggle.active span.bar-3 {
+  transform: translateY(-7px) rotate(-45deg);
 }
 
 /* ==========================================================================
@@ -1167,37 +1201,476 @@ button {
 }
 
 /* ==========================================================================
-   Responsive Breakpoints
+   Responsive Breakpoints & Mobile Optimization
    ========================================================================== */
-@media (max-width: 960px) {
+
+/* Tablet Landscape & Laptops (<= 1024px) */
+@media (max-width: 1024px) {
   .hero-grid {
     grid-template-columns: 1fr;
     gap: 40px;
   }
+  .skills-matrix-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .pillars-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
   .contact-grid {
     grid-template-columns: 1fr;
+    gap: 36px;
   }
 }
 
+/* Tablet Portrait & Mobile (<= 768px) */
 @media (max-width: 768px) {
-  .nav-links {
+  /* Global Layout */
+  .container {
+    padding: 0 20px;
+  }
+
+  /* 1. Header & Navigation */
+  .site-header {
+    height: 70px;
+  }
+  .nav-container {
+    height: 70px;
+  }
+  .brand-logo {
+    gap: 10px;
+  }
+  .logo-badge {
+    width: 38px;
+    height: 38px;
+    font-size: 1.05rem;
+  }
+  .brand-name {
+    font-size: 0.98rem;
+  }
+  .brand-title-badge {
+    font-size: 0.66rem;
+  }
+
+  /* Hide CV download button in header on tablet/mobile to prevent clutter */
+  .nav-actions .nav-btn-cv {
     display: none;
+  }
+  .nav-actions .nav-btn-contact {
+    padding: 8px 14px;
+    font-size: 0.82rem;
   }
   .mobile-menu-toggle {
     display: flex;
   }
-  .form-row {
+
+  /* Mobile Drawer Menu */
+  .nav-links {
+    position: fixed;
+    top: 70px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: calc(100vh - 70px);
+    height: calc(100dvh - 70px);
+    background: rgba(20, 18, 17, 0.98);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: 20px 24px 36px;
+    border-bottom: 1px solid rgba(212, 163, 115, 0.25);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateY(-8px);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 999;
+  }
+
+  .nav-links.mobile-open {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+
+  .nav-link {
+    font-size: 1.08rem;
+    font-weight: 600;
+    padding: 14px 4px;
+    border-bottom: 1px solid rgba(195, 175, 160, 0.08);
+    display: block;
+    width: 100%;
+    color: var(--text-highlight);
+  }
+
+  .nav-link::after {
+    display: none;
+  }
+
+  .mobile-drawer-cta {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding-top: 20px;
+    margin-top: 14px;
+    border-top: 1px solid var(--border-subtle);
+  }
+
+  body.menu-locked {
+    overflow: hidden;
+    touch-action: none;
+  }
+
+  /* 2. Hero Section */
+  .hero-section {
+    padding: 100px 0 54px;
+  }
+  .hero-grid {
     grid-template-columns: 1fr;
+    gap: 36px;
+  }
+  .hero-tag-pill {
+    font-size: 0.72rem;
+    padding: 5px 12px;
+    margin-bottom: 16px;
+    line-height: 1.4;
+    white-space: normal;
+    text-align: left;
+  }
+  .hero-name {
+    font-size: clamp(2rem, 6.8vw, 2.75rem);
+    line-height: 1.15;
+    margin-bottom: 6px;
+    word-break: break-word;
+  }
+  .hero-role-title {
+    font-size: clamp(1.1rem, 3.8vw, 1.35rem);
+    margin-bottom: 18px;
+    line-height: 1.3;
+  }
+  .hero-summary-box {
+    padding: 16px 18px;
+    margin-bottom: 22px;
+  }
+  .hero-summary-box p {
+    font-size: 0.94rem;
+    line-height: 1.65;
+  }
+  .hero-contact-row {
+    gap: 8px;
+    margin-bottom: 26px;
+  }
+  .contact-pill-item {
+    padding: 7px 12px;
+    font-size: 0.82rem;
+  }
+  .hero-actions-group {
+    gap: 10px;
+  }
+  .hero-profile-card {
+    max-width: 360px;
+    padding: 24px 18px;
+  }
+  .profile-avatar-wrap {
+    max-width: 240px;
+    height: 300px;
+    margin-bottom: 18px;
+  }
+
+  /* 3. Section Headers & General */
+  .section {
+    padding: 64px 0;
+  }
+  .section-header {
+    margin-bottom: 38px;
+  }
+  .section-title {
+    font-size: clamp(1.75rem, 5.5vw, 2.2rem);
+  }
+  .section-description {
+    font-size: 0.94rem;
+    line-height: 1.6;
+  }
+
+  /* 4. Professional Summary */
+  .summary-card-full {
+    padding: 24px 18px;
+    margin-bottom: 24px;
+  }
+  .summary-quote {
+    font-size: 1.05rem;
+    line-height: 1.7;
+    padding-left: 18px;
+    border-left-width: 3px;
+  }
+  .pillars-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .pillar-item {
+    padding: 20px 18px;
+  }
+
+  /* 5. Skills Matrix */
+  .skills-matrix-grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+  .skill-category-card {
+    padding: 22px 18px;
+  }
+
+  /* 6. Work Experience */
+  .work-card {
+    padding: 24px 18px;
   }
   .work-header {
     flex-direction: column;
     align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 18px;
+    padding-bottom: 14px;
+  }
+  .company-title {
+    font-size: 1.3rem;
   }
   .work-meta-right {
     align-items: flex-start;
+    gap: 4px;
+  }
+  .work-duties-list {
+    gap: 12px;
+  }
+  .work-duties-list li {
+    font-size: 0.92rem;
+    line-height: 1.6;
+    gap: 12px;
+  }
+
+  /* 7. Project Highlights */
+  .projects-container {
+    gap: 24px;
+  }
+  .cv-project-card {
+    padding: 24px 18px;
+  }
+  .project-top-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+  .project-title-area h3 {
+    font-size: 1.3rem;
+    line-height: 1.3;
+  }
+  .project-concept-quote {
+    font-size: 0.94rem;
+    padding: 10px 14px;
+    margin-bottom: 18px;
+  }
+  .project-bullets-list {
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  .project-bullets-list li {
+    font-size: 0.9rem;
+    line-height: 1.55;
+    gap: 10px;
+  }
+
+  /* 8. Contact Section */
+  .contact-card-left {
+    padding: 24px 18px;
+    gap: 20px;
+  }
+  .contact-card-left h3 {
+    font-size: 1.45rem;
+  }
+  .channel-box {
+    padding: 12px 14px;
+    gap: 12px;
+  }
+  .channel-info {
+    min-width: 0;
+    flex: 1;
+  }
+  .channel-info p {
+    font-size: 0.9rem;
+    word-break: break-all;
+    overflow-wrap: anywhere;
   }
   .download-cv-banner {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: stretch;
+    text-align: left;
+    padding: 18px 16px;
+    gap: 14px;
+  }
+  .download-cv-banner .btn {
+    width: 100%;
+    justify-content: center;
+  }
+  .contact-form-wrap {
+    padding: 24px 18px;
+  }
+  .form-row {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  .form-input, .form-textarea, .form-select {
+    font-size: 16px;
+    padding: 12px 14px;
+  }
+
+  /* 9. Footer Section */
+  .site-footer {
+    padding: 28px 0;
+  }
+  .footer-container {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 16px;
+  }
+  .footer-links {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px 16px;
+  }
+}
+
+/* Mobile Small Devices (<= 480px) */
+@media (max-width: 480px) {
+  .container {
+    padding: 0 16px;
+  }
+
+  /* Header on small screens: Keep only Brand Logo & Hamburger toggle */
+  .nav-container {
+    height: 64px;
+  }
+  .site-header {
+    height: 64px;
+  }
+  .nav-links {
+    top: 64px;
+    height: calc(100vh - 64px);
+    height: calc(100dvh - 64px);
+    padding: 16px 18px 30px;
+  }
+  .nav-actions .nav-btn-contact {
+    display: none;
+  }
+  .brand-logo {
+    gap: 8px;
+  }
+  .logo-badge {
+    width: 36px;
+    height: 36px;
+    font-size: 0.95rem;
+  }
+  .brand-name {
+    font-size: 0.9rem;
+  }
+  .brand-title-badge {
+    font-size: 0.62rem;
+  }
+
+  /* Hero Section */
+  .hero-section {
+    padding: 85px 0 44px;
+  }
+  .hero-name {
+    font-size: clamp(1.75rem, 8vw, 2.2rem);
+  }
+  .hero-role-title {
+    font-size: 1.05rem;
+    margin-bottom: 16px;
+  }
+  .hero-contact-row {
+    flex-direction: column;
+    width: 100%;
+    align-items: stretch;
+  }
+  .contact-pill-item {
+    width: 100%;
+    justify-content: flex-start;
+    padding: 8px 12px;
+    word-break: break-all;
+    overflow-wrap: anywhere;
+  }
+  .hero-actions-group {
+    flex-direction: column;
+    width: 100%;
+    align-items: stretch;
+    gap: 10px;
+  }
+  .hero-actions-group .btn {
+    width: 100%;
+    white-space: normal;
+    text-align: center;
+    justify-content: center;
+    padding: 12px 16px;
+    font-size: 0.9rem;
+  }
+  .hero-profile-card {
+    padding: 20px 14px;
+  }
+  .profile-avatar-wrap {
+    max-width: 210px;
+    height: 260px;
+  }
+  .profile-name {
+    font-size: 1.25rem;
+  }
+  .profile-tag {
+    font-size: 0.8rem;
+  }
+  .profile-status-bar {
+    font-size: 0.72rem;
+    padding: 5px 10px;
+  }
+  .tool-badge-pill {
+    font-size: 0.7rem;
+    padding: 4px 8px;
+  }
+
+  /* Cards on small screens */
+  .summary-card-full,
+  .work-card,
+  .cv-project-card,
+  .contact-card-left,
+  .contact-form-wrap {
+    padding: 20px 14px;
+    border-radius: var(--radius-md);
+  }
+  .project-title-area h3 {
+    font-size: 1.18rem;
+  }
+  .project-concept-quote {
+    font-size: 0.88rem;
+    padding: 8px 12px;
+  }
+  .project-bullets-list li {
+    font-size: 0.85rem;
+  }
+  .project-tags-row {
+    gap: 5px;
+  }
+  .project-tag {
+    font-size: 0.68rem;
+    padding: 3px 6px;
+  }
+  .btn {
+    white-space: normal;
+  }
+  .form-submit-btn {
+    padding: 13px;
+    font-size: 0.95rem;
   }
 }
